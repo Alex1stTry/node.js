@@ -9,14 +9,14 @@ class CommonMiddleWare {
     try {
       const id = req.params.id;
       if (!isObjectIdOrHexString(id)) {
-        throw new ApiError(400, "Invlid id");
+        throw new ApiError(400, "Invalid id");
       }
       next();
     } catch (e) {
       next(e);
     }
   }
-  public async isBodyValid(validator: ObjectSchema) {
+  public isBodyValid(validator: ObjectSchema) {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
         req.body = await validator.validateAsync(req.body);
