@@ -7,8 +7,7 @@ class UserService {
     return await userRepository.getAll();
   }
   public async getById(id: string): Promise<IUser> {
-    await this.isUserHere(id);
-    return await userRepository.getById(id);
+    return await this.isUserHere(id);
   }
   public async delete(id: string): Promise<void> {
     await this.isUserHere(id);
