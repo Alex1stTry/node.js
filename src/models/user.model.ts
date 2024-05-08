@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
     age: { type: Number, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    phone: { type: String, required: true },
     isDeleted: { type: Boolean, default: false },
     isVerified: { type: Boolean, default: false },
     role: { type: String, enum: RoleEnum, default: RoleEnum.USER },

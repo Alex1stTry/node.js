@@ -18,10 +18,12 @@ export class UserValidator {
     age: this.age.required(),
     email: this.email.required(),
     password: this.password.required(),
-    phone: this.phone,
+    phone: this.phone.required(),
   });
   public static update = joi.object({
     name: this.name,
-    password: this.password,
+    email: this.email,
+    age: this.age,
+    phone: this.phone.required(),
   });
 }

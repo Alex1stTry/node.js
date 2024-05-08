@@ -14,6 +14,11 @@ router.post(
   commonMiddleWare.isBodyValid(UserValidator.create),
   userController.create,
 );
-router.put("/:id", commonMiddleWare.isIdValid, userController.update);
+router.put(
+  "/:id",
+  commonMiddleWare.isIdValid,
+  commonMiddleWare.isBodyValid(UserValidator.update),
+  userController.update,
+);
 
 export const userRouter = router;
