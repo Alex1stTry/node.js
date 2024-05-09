@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 
 import { ApiError } from "../errors/api-error";
-import { IUser } from "../interfaces/user-interface";
+import { IUser } from "../interfaces/user.interface";
 import { userService } from "../services/user.service";
 
 class UserController {
@@ -11,6 +11,7 @@ class UserController {
       res.json(users);
     } catch (e) {}
   }
+
   public async getById(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id;
@@ -23,6 +24,7 @@ class UserController {
       next(e);
     }
   }
+
   public async delete(req: Request, res: Response, next: NextFunction) {
     try {
       const id = req.params.id;
@@ -32,15 +34,7 @@ class UserController {
       next(e);
     }
   }
-  public async create(req: Request, res: Response, next: NextFunction) {
-    try {
-      const dto = req.body as Partial<IUser>;
-      const newUser = await userService.create(dto);
-      res.status(201).json(newUser);
-    } catch (e) {
-      next(e);
-    }
-  }
+
   public async update(req: Request, res: Response, next: NextFunction) {
     try {
       const dto = req.body as Partial<IUser>;

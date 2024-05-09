@@ -10,3 +10,7 @@ export interface IUser {
   isDeleted: boolean;
   isVerified: boolean;
 }
+export interface ILogin {
+  email: string;
+  password: string;
+}
