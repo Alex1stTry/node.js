@@ -25,9 +25,9 @@ class AuthController {
     }
   }
   public async refresh(req: Request, res: Response, next: NextFunction) {
-    const jwtPaypoad = req.res.locals.jwtPayload as IJWTPayload;
+    const jwtPayload = req.res.locals.jwtPayload as IJWTPayload;
     const tokenPair = req.res.locals.tokenPair as IToken;
-    const data = authService.refresh(jwtPaypoad, tokenPair);
+    const data = authService.refresh(jwtPayload, tokenPair);
     res.status(201).json(data);
   }
 }

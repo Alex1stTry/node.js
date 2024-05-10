@@ -1,4 +1,4 @@
-import jsomwebtoken from "jsonwebtoken";
+import jsonwebtoken from "jsonwebtoken";
 
 import { config } from "../configs/config";
 import { TokenTypeEnum } from "../enums/token-type.enum";
@@ -8,16 +8,17 @@ import { ITokenResponse } from "../interfaces/token.interface";
 
 class TokenService {
   public generateTokens(payload: IJWTPayload): ITokenResponse {
-    const accessToken = jsomwebtoken.sign(payload, config.TOKEN_ACCESS_SECRET, {
+    const accessToken = jsonwebtoken.sign(payload, config.TOKEN_ACCESS_SECRET, {
       expiresIn: config.ACCESS_EXPIRES_IN,
     });
-    const refreshToken = jsomwebtoken.sign(
+    const refreshToken = jsonwebtoken.sign(
       payload,
       config.TOKEN_REFRESH_SECRET,
       {
         expiresIn: config.REFRESH_EXPIRES_IN,
       },
     );
+
     return {
       accessToken,
       accessExpires: config.ACCESS_EXPIRES_IN,
@@ -35,8 +36,10 @@ class TokenService {
         case TokenTypeEnum.REFRESH:
           secret = config.TOKEN_REFRESH_SECRET;
           break;
+        default:
+          throw new ApiError(401, "Invalid token type");
       }
-      return jsomwebtoken.verify(token, secret) as IJWTPayload;
+      return jsonwebtoken.verify(token, secret) as IJWTPayload;
     } catch (e) {
       throw new ApiError(401, "invalid token");
     }
