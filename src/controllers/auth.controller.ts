@@ -27,7 +27,7 @@ class AuthController {
   public async refresh(req: Request, res: Response, next: NextFunction) {
     const jwtPayload = req.res.locals.jwtPayload as IJWTPayload;
     const tokenPair = req.res.locals.tokenPair as IToken;
-    const data = authService.refresh(jwtPayload, tokenPair);
+    const data = await authService.refresh(jwtPayload, tokenPair);
     res.status(201).json(data);
   }
 }

@@ -18,8 +18,8 @@ class AuthService {
       password: hashedPassword,
     });
     const tokens = tokenService.generateTokens({
-      userId: dto._id,
-      role: dto.role,
+      userId: user._id,
+      role: user.role,
     });
     await tokenRepository.create({
       accessToken: tokens.accessToken,
