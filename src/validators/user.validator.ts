@@ -20,6 +20,7 @@ export class UserValidator {
     password: this.password.required(),
     phone: this.phone.required(),
   });
+
   public static update = joi.object({
     name: this.name,
     email: this.email,
