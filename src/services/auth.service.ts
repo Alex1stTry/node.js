@@ -28,7 +28,9 @@ class AuthService {
     });
     return { user, tokens };
   }
-  public async signIn(dto: ILogin): Promise<IUser> {
+  public async signIn(
+    dto: ILogin,
+  ): Promise<{ user: IUser; tokens: ITokenResponse }> {
     const user = await userRepository.getByParams({ email: dto.email });
 
     if (!user) {
@@ -42,7 +44,16 @@ class AuthService {
     if (!isCompare) {
       throw new ApiError(401, "email or password is wrong");
     }
-    return user;
+    const tokens = tokenService.generateTokens({
+      userId: user._id,
+      role: user.role,
+    });
+    await tokenRepository.create({
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+      _userId: user._id,
+    });
+    return { user, tokens };
   }
   public async refresh(
     jwtPayload: IJWTPayload,

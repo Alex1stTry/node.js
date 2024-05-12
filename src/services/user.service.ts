@@ -1,5 +1,6 @@
 import { ApiError } from "../errors/api-error";
 import { IUser } from "../interfaces/user.interface";
+import { tokenRepository } from "../repositories/token.repository";
 import { userRepository } from "../repositories/user.repository";
 
 class UserService {
@@ -10,9 +11,13 @@ class UserService {
   public async getById(id: string): Promise<IUser> {
     return await this.isUserHere(id);
   }
+  public async getMe(id: string): Promise<IUser> {
+    return await this.isUserHere(id);
+  }
 
-  public async delete(id: string): Promise<void> {
+  public async deleteMe(id: string): Promise<void> {
     await this.isUserHere(id);
+    await tokenRepository.deleteByMe(id);
     return await userRepository.delete(id);
   }
 
@@ -31,7 +36,7 @@ class UserService {
     return user;
   }
 
-  public async update(id: string, dto: Partial<IUser>) {
+  public async updateMe(id: string, dto: Partial<IUser>) {
     await this.isUserHere(id);
     return await userRepository.update(id, dto);
   }
