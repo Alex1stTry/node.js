@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 
+import { IForgot, ISetForgot } from "../interfaces/forgot.interface";
 import { IJWTPayload } from "../interfaces/jwtPayload.interface";
 import { IToken } from "../interfaces/token.interface";
 import { ILogin, IUser } from "../interfaces/user.interface";
@@ -29,6 +30,29 @@ class AuthController {
     const tokenPair = req.res.locals.tokenPair as IToken;
     const data = await authService.refresh(jwtPayload, tokenPair);
     res.status(201).json(data);
+  }
+  public async forgotPassword(req: Request, res: Response, next: NextFunction) {
+    try {
+      const body = req.body as IForgot;
+      await authService.forgotPassword(body);
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async setForgotPassword(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const body = req.body as ISetForgot;
+      const jwtPayload = req.res.locals.jwtPayload;
+      await authService.setForgotPassword(body, jwtPayload);
+      res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
   }
 }
 export const authController = new AuthController();

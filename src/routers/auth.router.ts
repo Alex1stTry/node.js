@@ -22,5 +22,16 @@ router.post(
   authMiddleWare.isRefreshTokenHere,
   authController.refresh,
 );
+router.post(
+  "/forgot-password",
+  commonMiddleWare.isBodyValid(UserValidator.forgot),
+  authController.forgotPassword,
+);
+router.put(
+  "/forgot-password",
+  commonMiddleWare.isBodyValid(UserValidator.setForgot),
+  authMiddleWare.checkActionToken,
+  authController.setForgotPassword,
+);
 
 export const authRouter = router;
